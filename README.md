@@ -4,6 +4,12 @@
 
 This repository contains the manuscript in computational proteomics. Our aim here is to describe how the proteomics community is developing and using bioinformatics software. 
 
+## Repo structure
+
+- manuscript.md: is the document containing the main manuascript. 
+- data: is the folder containing the `data` from citations, polls. 
+- source: Source code in R, python to compute the statistics. 
+
 ## Commenting and contributing 
 
 We hope to write a manuscript by the computational proteomics community that discuss the challenges, oportunities and drawbacks in current Computational Pooteomics by 2019. Feel free to open an issue if there is any point you would like to raise or discuss.
