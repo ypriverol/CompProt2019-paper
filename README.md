@@ -8,7 +8,11 @@ This repository contains the manuscript in computational proteomics. Our aim her
 
 - manuscript.md: is the document containing the main manuscript. 
 - data: is the folder containing the `data` from citations, polls. 
-- source: Source code in R, python to compute the statistics. 
+- source: Source code in R, python to compute the statistics.
+
+## Results of the analysis can be partically check in:
+
+https://ypriverol.github.io/CompProt2019-paper/
 
 ## Commenting and contributing 
 
