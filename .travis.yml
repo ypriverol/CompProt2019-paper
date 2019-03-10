@@ -1,0 +1,25 @@
+language: python
+python:
+  - "3.5"
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - pip install jupyter
+
+script:
+  - jupyter nbconvert source/transform_poll.ipynb --to html --output index.html
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: source
+  on:
+branch: master
