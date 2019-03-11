@@ -16,7 +16,7 @@ library(scico)
 
 # Load Data
 
-citationRaw <- read.table("data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
+citationRaw <- read.table("../../data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
 
 # Format
 
@@ -58,11 +58,11 @@ cumulativePlot <- ggplot() + theme_bw(base_size = 18) +
         panel.grid.minor.x = element_blank()
     )
 
-png("docs/citations/citations_cumulative.png", width = 800, height = 450)
+png("../citations_cumulative.png", width = 800, height = 450)
 plot(cumulativePlot)
 dummy <- dev.off()
 
-svg("docs/citations/citations_cumulative.svg", width = 800/72, height = 450/72)
+svg("../citations_cumulative.svg", width = 800/72, height = 450/72)
 plot(cumulativePlot)
 dummy <- dev.off()
 
