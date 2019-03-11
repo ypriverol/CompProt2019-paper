@@ -14,14 +14,14 @@ citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = ",", strin
 
 # Format
 
-citationDF <- citationDF %>% rename(Name = 'X') %>%
+citationDF <- citationDF %>% rename(Name = Name) %>%
     mutate(
         Sum2Y = X2017 + X2018,
-        rank = rank(-Sum),
+        rank = rank(-Total.Citations),
         rank2Y = rank(-Sum2Y, ties.method = "min"),
         delta = rank - rank2Y
     ) %>%
-    select(Name, Sum, rank, Sum2Y, rank2Y, delta) %>%
+    select(Name, Total.Citations, rank, Sum2Y, rank2Y, delta) %>%
     arrange(rank2Y) %>%
     mutate(
         rankName = paste(rank2Y, Name, sep = "- "),
