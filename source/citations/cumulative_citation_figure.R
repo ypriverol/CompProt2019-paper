@@ -1,3 +1,10 @@
+##
+#
+# This scripts plots the cumulative number of citations for publications based on an export from Thomson Reuters™ Web of Science™.
+# Paths are relative to the repository folder.
+#
+##
+
 
 # Libraries
 
@@ -9,47 +16,27 @@ library(scico)
 
 # Load Data
 
-citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
+citationRaw <- read.table("data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
 
 # Format
 
+citationDF <- citationRaw[, paste0("X", 1995:2018)]
+citationDF$Name <- citationRaw[, 1]
+citationDF$total <- rowSums(citationDF[, paste0("X", 1995:2018)])
+
 citationDF <- citationDF %>%
-    rename(Name = Name) %>%
+    arrange(desc(total))
+
+plotDF <- citationDF %>%
     gather(key = "Year", value = "N", paste0("X", 1995:2018)) %>%
     mutate("Year" = as.numeric(substring(Year, 2))) %>%
     replace_na(list(N = 0))
 
 
-# Separate top 10 from others
-
-top10Lim <- sort(unique(citationDF$Total.Citations), decreasing = T)[10]
-
-top10DF <- citationDF %>% filter(Total.Citations >= top10Lim)
-bottomDF <- citationDF %>% filter(Total.Citations < top10Lim)
-
-# Group others by year and merge
-
-otherDF <- bottomDF %>%
-    group_by(Year) %>%
-    summarise(
-        Name = "Other",
-        PMID = paste(Name, collapse = ", "),
-        Sum = sum(Total.Citations),
-        Review = 11,
-        Update = 11,
-        Diff = 0,
-        N = sum(N)
-    )
-
-plotDF <- rbind(top10DF, otherDF)
-
-
 # Get ribbon values
 
-orderedSE <- c(unique(top10DF$Name[order(top10DF$Sum, decreasing = T)]), "Other")
-
 plotDF <- plotDF %>%
-    mutate(orderedName = factor(Name, levels = orderedSE)) %>%
+    mutate(orderedName = factor(Name, levels = citationDF$Name)) %>%
     group_by(Year) %>%
     arrange(orderedName) %>%
     mutate(
@@ -62,8 +49,8 @@ plotDF <- plotDF %>%
 
 cumulativePlot <- ggplot() + theme_bw(base_size = 18) +
     geom_ribbon(data = plotDF, mapping = aes(x = Year, ymin = y1, ymax = y2, fill = orderedName)) +
-    scale_fill_manual(name = "Search Engine", values = c(scico(n = 10, palette = "batlow"), "grey80"), breaks = rev(orderedSE)) +
-    scale_y_continuous(name = "# Citations", expand = c(0, 0), limits = c(0, 1500)) +
+    scale_fill_manual(name = "Publication", values = scico(n = nrow(citationDF), palette = "batlow"), breaks = rev(levels(plotDF$orderedName))) +
+    scale_y_continuous(name = "# Citations", expand = c(0, 0), limits = c(0, 1.05 * max(plotDF$y2))) +
     scale_x_continuous(breaks = 1995:2018, expand = c(0, 0)) +
     theme(
         axis.title.x = element_blank(),
@@ -71,7 +58,7 @@ cumulativePlot <- ggplot() + theme_bw(base_size = 18) +
         panel.grid.minor.x = element_blank()
     )
 
-png("../cintations_cumulative.png", width = 1600, height = 900)
+png("docs/citations/citations_cumulative.png", width = 800, height = 450)
 plot(cumulativePlot)
 dummy <- dev.off()
 
