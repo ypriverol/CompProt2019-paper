@@ -10,7 +10,7 @@ library(ggrepel)
 
 # Load Data
 
-citationDF <- read.table("docs/citations/citation_table.txt", sep = "\t", stringsAsFactors = F, header = T)
+citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = "\t", stringsAsFactors = F, header = T)
 
 # Format
 
@@ -53,7 +53,7 @@ barPlot <- ggplot() + theme_bw(base_size = 18) +
     scale_y_continuous(name = "Rank Gain") +
     theme(axis.title.y = element_blank())
 
-png("docs/figures/rank_delta.png", width = 450, height = 800)
+png("../citations_rank_delta.png", width = 450, height = 800)
 plot(barPlot)
 dummy <- dev.off()
 

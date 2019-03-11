@@ -9,7 +9,7 @@ library(scico)
 
 # Load Data
 
-citationDF <- read.table("docs/citations/citation_table.txt", sep = "\t", stringsAsFactors = F, header = T)
+citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = "\t", stringsAsFactors = F, header = T)
 
 # Format
 
@@ -71,7 +71,7 @@ cumulativePlot <- ggplot() + theme_bw(base_size = 18) +
         panel.grid.minor.x = element_blank()
     )
 
-png("docs/figures/cumulative.png", width = 1600, height = 900)
+png("../cintations_cumulative.png", width = 1600, height = 900)
 plot(cumulativePlot)
 dummy <- dev.off()
 
