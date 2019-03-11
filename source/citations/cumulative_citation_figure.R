@@ -9,12 +9,12 @@ library(scico)
 
 # Load Data
 
-citationDF <- read.table("docs/citations/citation_table.txt", sep = "\t", stringsAsFactors = F, header = T)
+citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
 
 # Format
 
-citationDF <- citationDF %>% 
-    rename(Name = X) %>%
+citationDF <- citationDF %>%
+    rename(Name = Name) %>%
     gather(key = "Year", value = "N", paste0("X", 1995:2018)) %>%
     mutate("Year" = as.numeric(substring(Year, 2))) %>%
     replace_na(list(N = 0))
@@ -22,19 +22,19 @@ citationDF <- citationDF %>%
 
 # Separate top 10 from others
 
-top10Lim <- sort(unique(citationDF$Sum), decreasing = T)[10]
+top10Lim <- sort(unique(citationDF$Total.Citations), decreasing = T)[10]
 
-top10DF <- citationDF %>% filter(Sum >= top10Lim)
-bottomDF <- citationDF %>% filter(Sum < top10Lim)
+top10DF <- citationDF %>% filter(Total.Citations >= top10Lim)
+bottomDF <- citationDF %>% filter(Total.Citations < top10Lim)
 
 # Group others by year and merge
 
-otherDF <- bottomDF %>% 
+otherDF <- bottomDF %>%
     group_by(Year) %>%
     summarise(
         Name = "Other",
-        PMID = paste(PMID, collapse = ", "),
-        Sum = sum(Sum),
+        PMID = paste(Name, collapse = ", "),
+        Sum = sum(Total.Citations),
         Review = 11,
         Update = 11,
         Diff = 0,
@@ -71,7 +71,7 @@ cumulativePlot <- ggplot() + theme_bw(base_size = 18) +
         panel.grid.minor.x = element_blank()
     )
 
-png("docs/figures/cumulative.png", width = 1600, height = 900)
+png("../cintations_cumulative.png", width = 1600, height = 900)
 plot(cumulativePlot)
 dummy <- dev.off()
 
