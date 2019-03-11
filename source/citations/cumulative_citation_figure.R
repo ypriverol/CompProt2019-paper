@@ -62,3 +62,7 @@ png("docs/citations/citations_cumulative.png", width = 800, height = 450)
 plot(cumulativePlot)
 dummy <- dev.off()
 
+svg("docs/citations/citations_cumulative.svg", width = 800/72, height = 450/72)
+plot(cumulativePlot)
+dummy <- dev.off()
+
