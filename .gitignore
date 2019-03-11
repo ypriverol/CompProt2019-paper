@@ -9,3 +9,4 @@ out
 gen
 *.py
 source/transform_poll.py
+.Rproj.user
