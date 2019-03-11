@@ -14,7 +14,7 @@ install:
   - pip install jupyter
 
 script:
-  - jupyter nbconvert source/transform_poll.ipynb --to html --output index.html
+  - jupyter nbconvert source/Computational-Proteomics-Trends-2019.ipynb --to html --output index.html
 
 deploy:
   provider: pages
