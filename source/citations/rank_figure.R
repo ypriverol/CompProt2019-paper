@@ -10,12 +10,11 @@ library(ggrepel)
 
 # Load Data
 
-citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = "\t", stringsAsFactors = F, header = T)
+citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
 
 # Format
 
-citationDF <- citationDF %>% 
-    rename(Name = X) %>%
+citationDF <- citationDF %>% rename(Name = 'X') %>%
     mutate(
         Sum2Y = X2017 + X2018,
         rank = rank(-Sum),
@@ -37,7 +36,7 @@ scatterPlot <- ggplot() + theme_bw(base_size = 18) +
     scale_x_reverse(name = "Rank [1995-2018]", expand = c(0, 0), limits = c(nrow(citationDF) + 5, 0)) +
     scale_y_reverse(name = "Rank [2017-2018]", expand = c(0, 0), limits = c(nrow(citationDF) + 5, 0))
 
-png("docs/figures/rank.png", width = 1600, height = 900)
+png("../citations_rank.png", width = 1600, height = 900)
 plot(scatterPlot)
 dummy <- dev.off()
 

@@ -9,11 +9,11 @@ library(scico)
 
 # Load Data
 
-citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = "\t", stringsAsFactors = F, header = T)
+citationDF <- read.table("../../data/web-sciences-metrics.txt", sep = ",", stringsAsFactors = F, header = T)
 
 # Format
 
-citationDF <- citationDF %>% 
+citationDF <- citationDF %>%
     rename(Name = X) %>%
     gather(key = "Year", value = "N", paste0("X", 1995:2018)) %>%
     mutate("Year" = as.numeric(substring(Year, 2))) %>%
@@ -29,7 +29,7 @@ bottomDF <- citationDF %>% filter(Sum < top10Lim)
 
 # Group others by year and merge
 
-otherDF <- bottomDF %>% 
+otherDF <- bottomDF %>%
     group_by(Year) %>%
     summarise(
         Name = "Other",
