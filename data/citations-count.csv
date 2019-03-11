@@ -1,11 +1,13 @@
 Software,Citations
-MSGF+,370
-Perseus,871
-Andromeda,2374
-MaxQuant,6412
 moff,15
-Mascot,8063
+Sequest,6230
+MaxQuant,6412
 OpenMS,887
-Comet,454
+Andromeda,2374
+Perseus,871
 Skyline,1941
 XTandem,2156
+Mascot,8063
+MSGF+,370
+Trans-proteomics pipeline,566
+Comet,454
